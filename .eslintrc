@@ -78,6 +78,10 @@
       2,
       "^(err|error|anySpecificError)$"
     ],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {"devDependencies": true}
+    ],
     "indent": [
       2,
       2,
