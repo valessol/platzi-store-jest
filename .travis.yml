@@ -1,0 +1,22 @@
+language: node_js
+cache:
+  directories:
+    - ~/.npm
+node_js:
+  - '12' # version de node en la que estamos trabajando
+git:
+  depth: 3 # profundidad de acceso al repositorio de git (hasta la 3er capa) por defecto
+script:
+  - yarn test
+  - yarn build
+deploy:
+  provider: pages # github pages
+  edge: true # estos 3 elementos que siguen hacen relación al cache y la configracion general del comportamiento del repo
+  skip-cleanup: true
+  keep-history: true
+  github-token: $GITHUB_TOKEN
+  local-dir: dist/ # directorio al que se envía a producción una vez pasadas las pruebas y generado el compilado. Este directorio ya fué establecido en la configuración de webpack por lo que es importante que coincidan.  (webpack.config.js, output: {patch: path.resolve(__dirname, 'dist')})
+  target-branch: gh-pages # branch al cual vamos a mandar la información para el deploy. GitHub pages tiene dos opciones para configurar esto, sea master o gh-pages
+  commit_message: "Deploy release ${TRAVIS_TAG}"
+  on:
+    branch: master # escucha los cambios en esta branch
